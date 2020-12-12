@@ -1,0 +1,9 @@
+README.md
+setup.py
+pysimplicate/__init__.py
+pysimplicate/simplicate.py
+pysimplicate.egg-info/PKG-INFO
+pysimplicate.egg-info/SOURCES.txt
+pysimplicate.egg-info/dependency_links.txt
+pysimplicate.egg-info/requires.txt
+pysimplicate.egg-info/top_level.txt
