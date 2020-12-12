@@ -1,1 +1,1 @@
-from simplicate import Simplicate
+from .simplicate import Simplicate
