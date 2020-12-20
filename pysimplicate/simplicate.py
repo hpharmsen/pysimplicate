@@ -2,7 +2,7 @@ import time
 import requests
 
 
-class Simplicate():
+class Simplicate:
     def __init__(self, subdomain, api_key, api_secret):
         self.subdomain = subdomain
         self.api_key = api_key
@@ -18,8 +18,7 @@ class Simplicate():
     from ._service import defaultservices
 
     def call(self, url_path: str):
-        my_headers = {'Authentication-Key': self.api_key,
-                      'Authentication-Secret': self.api_secret}
+        my_headers = {'Authentication-Key': self.api_key, 'Authentication-Secret': self.api_secret}
         url = f'https://{ self.subdomain}.simplicate.nl/api/v2{url_path}'
         url = self.add_url_param(url, 'metadata', 'count')
         url = self.add_url_param(url, 'offset', '')
@@ -32,7 +31,7 @@ class Simplicate():
                 while True:
                     response = requests.get(url2, headers=my_headers, timeout=15)
                     if response.status_code == 429:
-                        time.sleep(10) # Rate limit exceeded. Wait 10 secs and try again
+                        time.sleep(10)  # Rate limit exceeded. Wait 10 secs and try again
                         continue
                     break
                 response.raise_for_status()
@@ -46,14 +45,14 @@ class Simplicate():
             except requests.exceptions.HTTPError as errh:
                 print(errh)
             except requests.exceptions.ConnectionError as errc:
-                connection_reset_tries +=1
+                connection_reset_tries += 1
                 if connection_reset_tries <= 2:
-                    continue # Try again
+                    continue  # Try again
                 print(errc)
             except requests.exceptions.Timeout as errt:
-                connection_reset_tries +=1
+                connection_reset_tries += 1
                 if connection_reset_tries <= 2:
-                    continue # Try again
+                    continue  # Try again
                 print(errt)
             except requests.exceptions.RequestException as err:
                 print(err)
@@ -61,9 +60,8 @@ class Simplicate():
             try:
                 print(response.content)
             except:
-                pass # There was no respons yet
+                pass  # There was no respons yet
             return False
-
 
     def add_url_param(self, url, key, value):
         delimiter = '&' if url.count('?') else '?'

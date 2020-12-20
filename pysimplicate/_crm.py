@@ -2,6 +2,7 @@ def organisation(self):
     result = self.call('/crm/organization')
     return result
 
+
 def persons(self, first_name: str = '', last_name: str = ''):
     url = '/crm/person'
     if first_name:

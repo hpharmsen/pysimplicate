@@ -9,12 +9,13 @@ def invoices(self, from_date: str = '', until_date: str = '', year=''):
     return result
 
 
-def date_param( **kwargs ):
+def date_param(**kwargs):
     year = kwargs.get('year')
     from_date_str = kwargs.get('from_date_str')
     until_date_str = kwargs.get('until_date_str')
-    assert year == '' or (from_date_str == '' and until_date_str == ''), \
-        "you cannot specifiy both year and one of from_date_str and until_date_str"
+    assert year == '' or (
+        from_date_str == '' and until_date_str == ''
+    ), "you cannot specifiy both year and one of from_date_str and until_date_str"
     if year:
         return f'{year}-01-01', f'{year}-12-31'
     else:
