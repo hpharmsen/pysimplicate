@@ -11,6 +11,7 @@ class Simplicate():
     from ._crm import organisation, persons
     from ._employee import employees
     from ._hours import hours_types, hours_count, hours_data, hours_data_simplified, turnover
+    from ._hrm import leave, leave_simplified, leavetypes, leavebalance
     from ._invoices import invoices
     from ._projects import projects, service, purchasetypes
     from ._sales import revenue_groups
@@ -66,4 +67,4 @@ class Simplicate():
 
     def add_url_param(self, url, key, value):
         delimiter = '&' if url.count('?') else '?'
-        return url + delimiter + key + '=' + value
+        return url + delimiter + key + '=' + requests.utils.quote(value)
