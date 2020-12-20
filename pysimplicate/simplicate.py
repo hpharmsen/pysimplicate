@@ -12,10 +12,11 @@ class Simplicate():
         my_headers = {'Authentication-Key': self.api_key,
                       'Authentication-Secret': self.api_secret}
         url = f'https://{ self.subdomain}.simplicate.nl/api/v2{url_path}'
-        delimiter = '&' if url.count('?') else '?'
-        url += delimiter+'metadata=count,limit&offset='
+        url = add_url_param(url, 'metadata', 'count')
+        url = add_url_param(url, 'offset', '')
         result = []
         offset = 0
+        connection_reset_tries = 0
         while True:
             try:
                 url2 = url + str(offset)
@@ -36,13 +37,22 @@ class Simplicate():
             except requests.exceptions.HTTPError as errh:
                 print(errh)
             except requests.exceptions.ConnectionError as errc:
+                connection_reset_tries +=1
+                if connection_reset_tries <= 2:
+                    continue # Try again
                 print(errc)
             except requests.exceptions.Timeout as errt:
+                connection_reset_tries +=1
+                if connection_reset_tries <= 2:
+                    continue # Try again
                 print(errt)
             except requests.exceptions.RequestException as err:
                 print(err)
             print(url2)
-            print(response.content)
+            try:
+                print(response.content)
+            except:
+                pass # There was no respons yet
             return False
 
     def organisation(self):
@@ -118,6 +128,14 @@ class Simplicate():
                  hourstype:str=None, employee:str=None, from_date:str= '', until_date:str= ''):
         hours = self.hours_data(project, service, label, revenue_group_id, hourstype, employee, from_date, until_date)
         # todo:  Correcties eraf trekken
+        if not hours:
+            #print( 'Could not calculate hours', locals())
+            return 0
+        for h in hours:
+            if h['corrections']['amount'] > 0:
+                corrections = h['corrections']['amount']
+                corrections += 0
+
         return sum([d['hours']*d['tariff'] for d in hours])
 
     def invoices(self, from_date:str='', until_date:str='', year=''):
@@ -153,6 +171,28 @@ class Simplicate():
         result = self.call(url)
         return result
 
+    def persons(self, first_name:str='', last_name:str=''):
+        url = '/crm/person'
+        if first_name:
+            url = add_url_param( url, 'q[first_name]', first_name)
+        if last_name:
+           add_url_param( url, 'q[last_name]', last_name)
+        result = self.call(url)
+        return result
+
+
+    def employees(self, first_name: str = '', last_name: str = '', active:bool=True):
+        url = '/hrm/employee' #?name[gt]=&[status.label]=active
+        if active:
+            url = add_url_param(url, 'employment_status', 'active')
+        if first_name:
+            url = add_url_param(url, 'q[first_name]', first_name)
+        if last_name:
+            add_url_param(url, 'q[last_name]', last_name)
+        result = self.call(url)
+        return result
+
+
 def date_param( **kwargs ):
     year = kwargs.get('year')
     from_date_str = kwargs.get('from_date_str')
@@ -163,3 +203,7 @@ def date_param( **kwargs ):
         return f'{year}-01-01', f'{year}-12-31'
     else:
         return from_date_str, until_date_str
+
+def add_url_param( url, key, value):
+    delimiter = '&' if url.count('?') else '?'
+    return url + delimiter + key + '=' + value
