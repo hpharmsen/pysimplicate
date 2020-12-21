@@ -2,7 +2,15 @@ from beautiful_date import *
 
 # Fetches all leave types
 # Returns list of {id, employee, start_date, end_date, year, description}
-def leave(self, employee_name=None, year=None, from_date:str=None, until_date:str=None, leavetype_label=None, affects_balance=None):
+def leave(
+    self,
+    employee_name=None,
+    year=None,
+    from_date: str = None,
+    until_date: str = None,
+    leavetype_label=None,
+    affects_balance=None,
+):
     url = '/hrm/leave'
     if employee_name:
         url = self.add_url_param(url, 'q[employee.name]', employee_name)
@@ -21,7 +29,15 @@ def leave(self, employee_name=None, year=None, from_date:str=None, until_date:st
     return result
 
 
-def leave_simplified(self, employee_name=None, year=None, from_date:str=None, until_date:str=None, leavetype_label=None, affects_balance=None):
+def leave_simplified(
+    self,
+    employee_name=None,
+    year=None,
+    from_date: str = None,
+    until_date: str = None,
+    leavetype_label=None,
+    affects_balance=None,
+):
     # Returns list of {employee_name, start_date, days, description}
     leaves = leave(self, employee_name, year, from_date, until_date, leavetype_label, affects_balance)
     if not leaves:
