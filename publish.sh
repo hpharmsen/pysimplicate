@@ -10,3 +10,6 @@ python -c "major, minor = open('version.txt').read().rsplit('.',1);open('version
 python setup.py sdist bdist_wheel &&
 git commit -v -a -m "publish  `date`" &&
 git push
+
+echo "to update installed package:"
+echo "pip install --upgrade --force-reinstall git+https://github.com/hpharmsen/pysimplicate"

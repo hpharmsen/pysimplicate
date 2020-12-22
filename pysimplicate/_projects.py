@@ -1,16 +1,27 @@
 def projects(self, from_date: str = '', until_date: str = '', status: str = ''):
     url = '/projects/project?sort=-updated_at'
     if from_date:
-        url += '&q[modified][ge]=' + from_date
+        url = self.add_url_param(url, 'modified', from_date, 'ge')
     if until_date:
-        url += '&q[created][le]=' + until_date
-    if (
-        status
-    ):  # !! Dit werkt niet helaas. URL is '/projects/project?sort=-updated_at&q[modified][ge]=2019-01-01&q[created][le]=2019-07-01&q[project_status.label]=tab_pactive'
-        assert status in ('active', 'closed'), "Status can only be 'active' or 'closed'"
-        url += '&q[project_status.label]=tab_p' + status
+        url = self.add_url_param(url, 'created', until_date, 'le')
+    if status:
+        status_dict = self.project_status()
+        assert status in status_dict.keys, "Status can only be one of {status_dict.keys}"
+        url = self.add_url_param(url, '&q[project_status.id]', status_dict[status] )
     result = self.call(url)
     return result
+
+
+def projectstatus(self):
+    url = '/projects/projectstatus'
+    result = self.call(url)
+    return result
+
+def project_status_options(self):
+    # Retrieves the list of project statusses and caches it
+    if not hasattr(self,'_project_status_dict'):
+        self._project_status_dict = {status['label']:status['id'] for status in self.project_status()}
+    return self._project_status_dict
 
 
 def service(self):

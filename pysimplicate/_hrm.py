@@ -13,17 +13,17 @@ def leave(
 ):
     url = '/hrm/leave'
     if employee_name:
-        url = self.add_url_param(url, 'q[employee.name]', employee_name)
+        url = self.add_url_param(url, 'employee.name', employee_name)
     if year:
-        url = self.add_url_param(url, 'q[year]', str(year))
+        url = self.add_url_param(url, 'year', str(year))
     if leavetype_label:
-        url = self.add_url_param(url, 'q[leavetype.label]', leavetype_label)
+        url = self.add_url_param(url, 'leavetype.label', leavetype_label)
     if affects_balance != None:
-        url = self.add_url_param(url, 'q[leavetype.affects_balance]', str(int(affects_balance)))
+        url = self.add_url_param(url, 'leavetype.affects_balance', str(int(affects_balance)))
     if from_date:
-        url += '&q[start_date][ge]=' + from_date
+        url = self.add_url_param(url, 'start_date', from_date, 'ge')
     if until_date:
-        url += '&q[end_date][le]=' + until_date
+        url = self.add_url_param(url, 'end_date', until_date, 'le')
 
     result = self.call(url)
     return result
@@ -64,7 +64,7 @@ def _to_date(date: str):
 def leavetypes(self, show_blocked=False):
     url = '/hrm/leavetype'
     if not show_blocked:
-        url = self.add_url_param(url, 'q[blocked]', 'False')
+        url = self.add_url_param(url, 'blocked', 'False')
     result = self.call(url)
     return result
 
@@ -74,12 +74,12 @@ def leavetypes(self, show_blocked=False):
 def leavebalance(self, employee_name=None, year=None, leavetype_label=None, affects_balance=None):
     url = '/hrm/leavebalance'
     if employee_name:
-        url = self.add_url_param(url, 'q[employee.name]', employee_name)
+        url = self.add_url_param(url, 'employee.name', employee_name)
     if year:
-        url = self.add_url_param(url, 'q[year]', str(year))
+        url = self.add_url_param(url, 'year', str(year))
     if leavetype_label:
-        url = self.add_url_param(url, 'q[leavetype.label]', leavetype_label)
+        url = self.add_url_param(url, 'leavetype.label', leavetype_label)
     if affects_balance != None:
-        url = self.add_url_param(url, 'q[leavetype.affects_balance]', str(int(affects_balance)))
+        url = self.add_url_param(url, 'leavetype.affects_balance', str(int(affects_balance)))
     result = self.call(url)
     return result

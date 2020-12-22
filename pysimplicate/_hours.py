@@ -17,21 +17,21 @@ def hours_data(
 ):
     url = '/hours/hours?sort=start_date'
     if project:
-        url += '&q[project.project_number]=' + project
+        url = self.add_url_param(url, 'project.project_number', project)
     if service:
-        url += '&q[projectservice.name]=' + service
+        url = self.add_url_param(url, 'projectservice.name', service)
     if label:
-        url += '&q[type.label]=' + label
+        url = self.add_url_param(url, 'type.label', label)
     if revenue_group_id:
-        url += '&q[projectservice.revenue_group_id]=' + revenue_group_id
+        url = self.add_url_param(url, 'projectservice.revenue_group_id', revenue_group_id)
     if hourstype:
-        url += '&q[type.label]=' + hourstype
+        url = self.add_url_param(url, 'type.label', hourstype)
     if employee:
-        url += '&q[employee.name]=' + employee
+        url = self.add_url_param(url, 'employee.name', employee)
     if from_date:
-        url += '&q[start_date][ge]=' + from_date
+        url = self.add_url_param(url, 'start_date', from_date, 'ge')
     if until_date:
-        url += '&q[start_date][le]=' + until_date
+        url = self.add_url_param(url, 'start_date', until_date, 'le')
     result = self.call(url)
     return result
 

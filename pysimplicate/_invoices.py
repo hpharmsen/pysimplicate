@@ -2,9 +2,9 @@ def invoices(self, from_date: str = '', until_date: str = '', year=''):
     from_date_str, until_date_str = date_param(**locals())
     url = '/invoices/invoice?sort=id'
     if from_date_str:
-        url += '&q[date][ge]=' + from_date
+        url = self.add_url_param(url, 'date', from_date, 'ge')
     if until_date_str:
-        url += '&q[date][le]=' + until_date
+        url = self.add_url_param(url, 'date', until_date, 'le')
     result = self.call(url)
     return result
 

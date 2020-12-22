@@ -20,8 +20,8 @@ class Simplicate:
     def call(self, url_path: str):
         my_headers = {'Authentication-Key': self.api_key, 'Authentication-Secret': self.api_secret}
         url = f'https://{ self.subdomain}.simplicate.nl/api/v2{url_path}'
-        url = self.add_url_param(url, 'metadata', 'count')
-        url = self.add_url_param(url, 'offset', '')
+        delimiter = '&' if url.count('?') else '?'
+        url += delimiter + 'metadata=count&offset='
         result = []
         offset = 0
         connection_reset_tries = 0
@@ -63,6 +63,7 @@ class Simplicate:
                 pass  # There was no respons yet
             return False
 
-    def add_url_param(self, url, key, value):
+    def add_url_param(self, url, key, value, operator=''):
         delimiter = '&' if url.count('?') else '?'
-        return url + delimiter + key + '=' + requests.utils.quote(value)
+        operator = f'[{operator}]' if operator else ''
+        return url + delimiter + f'q[{key}]' + operator + '=' + requests.utils.quote(value)
