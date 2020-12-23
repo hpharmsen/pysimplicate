@@ -3,6 +3,7 @@ def hourstype(self):
     result = self.call(url)
     return result
 
+
 def hourstype_simple(self):
     result = self.hourstype()
     return {d['id']: {'type': d['type'], 'tariff': d['tariff'], 'label': d['label']} for d in result}
@@ -11,13 +12,15 @@ def hourstype_simple(self):
 def hours(self, filter):
     url = '/hours/hours?sort=start_date'
 
-    fields = { 'employee_name':'employee.name',
-               'project':'project.project_number',
-               'service':'projectservice.name',
-               'hourstype':'type.label',
-               'start_date': 'start_date',
-               'end_date':'end_date',
-               'revenuegroup_id':'projectservice.revenue_group_id'}
+    fields = {
+        'employee_name': 'employee.name',
+        'project': 'project.project_number',
+        'service': 'projectservice.name',
+        'hourstype': 'type.label',
+        'start_date': 'start_date',
+        'end_date': 'end_date',
+        'revenuegroup_id': 'projectservice.revenue_group_id',
+    }
     for field, extended_field in fields.items():
         if field in filter.keys():
             value = filter[field]

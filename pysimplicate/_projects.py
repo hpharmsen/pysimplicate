@@ -4,11 +4,11 @@ def project(self, filter):
     for field in ('from_date', 'until_date', 'status'):
         if field in filter.keys():
             value = filter[field]
-            if field=='from_date':
+            if field == 'from_date':
                 url = self.add_url_param(url, 'modified', value, 'ge')
-            if field=='until_date':
+            if field == 'until_date':
                 url = self.add_url_param(url, 'created', value, 'le')
-            if field=='status':
+            if field == 'status':
                 assert value in projectstatus_dict().keys(), "Status can only be one of {projectstatus_dict.keys()}"
                 url = self.add_url_param(url, 'project_status.id', projectstatus_dict()[value])
     result = self.call(url)
@@ -27,11 +27,13 @@ def projectstatus_dict(self):
         self._project_statusdict = {status['label']: status['id'] for status in self.project_status()}
     return self._projectstatus_dict
 
+
 # Diensten
 def service(self):
     url = '/projects/service'
     result = self.call(url)
     return result
+
 
 # Kostensoorten
 def purchasetypes(self):

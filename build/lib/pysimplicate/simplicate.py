@@ -8,14 +8,14 @@ class Simplicate:
         self.api_key = api_key
         self.api_secret = api_secret
 
-    from ._crm import organisation, persons
-    from ._employee import employees
-    from ._hours import hours_types, hours_count, hours_data, hours_data_simplified, turnover
-    from ._hrm import leave, leave_simplified, leavetypes, leavebalance
-    from ._invoices import invoices
-    from ._projects import projects, service, purchasetypes
-    from ._sales import revenue_groups
-    from ._service import defaultservices
+    from ._crm import organisation, person
+    from ._employee import employee
+    from ._hours import hourstype, hourstype_simple, hours, hours_simple, hours_count, turnover
+    from ._hrm import leave, leave_simplified, leavetype, leavebalance
+    from ._invoices import invoice, invoice_per_year
+    from ._projects import project, projectstatus, projectstatus_dict, service, purchasetypes
+    from ._sales import revenuegroup, revenuegroup_dict
+    from ._service import defaultservice
 
     def call(self, url_path: str):
         my_headers = {'Authentication-Key': self.api_key, 'Authentication-Secret': self.api_secret}
@@ -66,4 +66,4 @@ class Simplicate:
     def add_url_param(self, url, key, value, operator=''):
         delimiter = '&' if url.count('?') else '?'
         operator = f'[{operator}]' if operator else ''
-        return url + delimiter + f'q[{key}]' + operator + '=' + requests.utils.quote(value)
+        return url + delimiter + f'q[{key}]' + operator + '=' + requests.utils.quote(str(value))

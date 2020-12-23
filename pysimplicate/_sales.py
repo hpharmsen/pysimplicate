@@ -4,6 +4,7 @@ def revenuegroup(self):
     result = self.call(url)
     return result
 
+
 def revenuegroup_dict(self):
     # Retrieves the list of revenue groups and caches it
     if not hasattr(self, '_revenuegroup_dict'):

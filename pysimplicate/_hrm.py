@@ -4,12 +4,14 @@ from beautiful_date import *
 # Returns list of {id, employee, start_date, end_date, year, description}
 def leave(self, filter):
     url = '/hrm/leave'
-    fields = { 'employee_name':'employee.name',
-               'year':'year',
-               'leavetype_label':'leavetype.label',
-               'affects_balance':'leavetype.affects_balance',
-               'start_date': 'start_date',
-               'end_date':'end_date'}
+    fields = {
+        'employee_name': 'employee.name',
+        'year': 'year',
+        'leavetype_label': 'leavetype.label',
+        'affects_balance': 'leavetype.affects_balance',
+        'start_date': 'start_date',
+        'end_date': 'end_date',
+    }
     for field, extended_field in fields.items():
         if field in filter.keys():
             value = filter[field]
@@ -62,10 +64,12 @@ def leavetype(self, show_blocked=False):
 # Returns list of {employee (id, name), balance (in hours), year, leave_type (id, label)}
 def leavebalance(self, filter):
     url = '/hrm/leavebalance'
-    fields = { 'employee_name':'employee.name',
-               'year':'year',
-               'leavetype_label':'leavetype.label',
-               'affects_balance':'leavetype.affects_balance'}
+    fields = {
+        'employee_name': 'employee.name',
+        'year': 'year',
+        'leavetype_label': 'leavetype.label',
+        'affects_balance': 'leavetype.affects_balance',
+    }
     for field, extended_field in fields.items():
         if field in filter.keys():
             value = filter[field]
