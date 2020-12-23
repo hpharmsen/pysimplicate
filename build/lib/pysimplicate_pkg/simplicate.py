@@ -136,7 +136,7 @@ class Simplicate():
         return result
 
     # Diensten
-    def defaultservices(self):
+    def defaultservice(self):
         url = '/services/defaultservice'
         result = self.call(url)
         return result

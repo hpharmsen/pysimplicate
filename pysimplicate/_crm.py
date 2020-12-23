@@ -3,11 +3,10 @@ def organisation(self):
     return result
 
 
-def persons(self, first_name: str = '', last_name: str = ''):
+def person(self, filter):
     url = '/crm/person'
-    if first_name:
-        url = self.add_url_param(url, 'first_name', first_name)
-    if last_name:
-        self.add_url_param(url, 'last_name', last_name)
+    for field in ('first_name', 'last_name'):
+        if field in filter.keys():
+            url = self.add_url_param(url, field, filter[field])
     result = self.call(url)
     return result

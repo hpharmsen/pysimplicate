@@ -1,22 +1,13 @@
-def invoices(self, from_date: str = '', until_date: str = '', year=''):
-    from_date_str, until_date_str = date_param(**locals())
+# todo: add filter for invoice status
+
+def invoice(self, filter):
     url = '/invoices/invoice?sort=id'
-    if from_date_str:
-        url = self.add_url_param(url, 'date', from_date, 'ge')
-    if until_date_str:
-        url = self.add_url_param(url, 'date', until_date, 'le')
+    for field in ('from_date', 'until_date'):
+        if field in filter.keys():
+            operator = 'ge' if field=='from_date' else 'le'
+            url = self.add_url_param(url, 'date', filter[field], operator)
     result = self.call(url)
     return result
 
-
-def date_param(**kwargs):
-    year = kwargs.get('year')
-    from_date_str = kwargs.get('from_date_str')
-    until_date_str = kwargs.get('until_date_str')
-    assert year == '' or (
-        from_date_str == '' and until_date_str == ''
-    ), "you cannot specifiy both year and one of from_date_str and until_date_str"
-    if year:
-        return f'{year}-01-01', f'{year}-12-31'
-    else:
-        return from_date_str, until_date_str
+def invoice_per_year(self, year):
+    return self.invoice( {'from_date':f'{year}-01-01', 'until_date':f'{year}-12-31'})

@@ -2,44 +2,33 @@ from beautiful_date import *
 
 # Fetches all leave types
 # Returns list of {id, employee, start_date, end_date, year, description}
-def leave(
-    self,
-    employee_name=None,
-    year=None,
-    from_date: str = None,
-    until_date: str = None,
-    leavetype_label=None,
-    affects_balance=None,
-):
+def leave(self, filter):
     url = '/hrm/leave'
-    if employee_name:
-        url = self.add_url_param(url, 'employee.name', employee_name)
-    if year:
-        url = self.add_url_param(url, 'year', str(year))
-    if leavetype_label:
-        url = self.add_url_param(url, 'leavetype.label', leavetype_label)
-    if affects_balance != None:
-        url = self.add_url_param(url, 'leavetype.affects_balance', str(int(affects_balance)))
-    if from_date:
-        url = self.add_url_param(url, 'start_date', from_date, 'ge')
-    if until_date:
-        url = self.add_url_param(url, 'end_date', until_date, 'le')
+    fields = { 'employee_name':'employee.name',
+               'year':'year',
+               'leavetype_label':'leavetype.label',
+               'affects_balance':'leavetype.affects_balance',
+               'start_date': 'start_date',
+               'end_date':'end_date'}
+    for field, extended_field in fields.items():
+        if field in filter.keys():
+            value = filter[field]
+            operator = ''
+            if field == 'affects_balance':
+                value = str(int(value))
+            elif field == 'start_date':
+                operator = 'ge'
+            elif field == 'end_date':
+                operator = 'le'
+            url = self.add_url_param(url, extended_field, value, operator)
 
     result = self.call(url)
     return result
 
 
-def leave_simplified(
-    self,
-    employee_name=None,
-    year=None,
-    from_date: str = None,
-    until_date: str = None,
-    leavetype_label=None,
-    affects_balance=None,
-):
+def leave_simplified(self, filter):
     # Returns list of {employee_name, start_date, days, description}
-    leaves = leave(self, employee_name, year, from_date, until_date, leavetype_label, affects_balance)
+    leaves = leave(self, filter)
     if not leaves:
         return False
 
@@ -61,7 +50,7 @@ def _to_date(date: str):
 
 # Fetches all leave types
 # Returns list of {id, label, blocked, color, affects_balance}
-def leavetypes(self, show_blocked=False):
+def leavetype(self, show_blocked=False):
     url = '/hrm/leavetype'
     if not show_blocked:
         url = self.add_url_param(url, 'blocked', 'False')
@@ -71,15 +60,18 @@ def leavetypes(self, show_blocked=False):
 
 # Fetches all leave balances for employees
 # Returns list of {employee (id, name), balance (in hours), year, leave_type (id, label)}
-def leavebalance(self, employee_name=None, year=None, leavetype_label=None, affects_balance=None):
+def leavebalance(self, filter):
     url = '/hrm/leavebalance'
-    if employee_name:
-        url = self.add_url_param(url, 'employee.name', employee_name)
-    if year:
-        url = self.add_url_param(url, 'year', str(year))
-    if leavetype_label:
-        url = self.add_url_param(url, 'leavetype.label', leavetype_label)
-    if affects_balance != None:
-        url = self.add_url_param(url, 'leavetype.affects_balance', str(int(affects_balance)))
+    fields = { 'employee_name':'employee.name',
+               'year':'year',
+               'leavetype_label':'leavetype.label',
+               'affects_balance':'leavetype.affects_balance'}
+    for field, extended_field in fields.items():
+        if field in filter.keys():
+            value = filter[field]
+            if field == 'affects_balance':
+                value = str(int(value))
+            url = self.add_url_param(url, extended_field, value)
+
     result = self.call(url)
     return result

@@ -1,53 +1,39 @@
-def hours_types(self):
+def hourstype(self):
     url = '/hours/hourstype'
     result = self.call(url)
+    return result
+
+def hourstype_simple(self):
+    result = self.hourstype()
     return {d['id']: {'type': d['type'], 'tariff': d['tariff'], 'label': d['label']} for d in result}
 
 
-def hours_data(
-    self,
-    project: str = None,
-    service: str = None,
-    label: str = None,
-    revenue_group_id: str = None,
-    hourstype: str = None,
-    employee: str = None,
-    from_date: str = '',
-    until_date: str = '',
-):
+def hours(self, filter):
     url = '/hours/hours?sort=start_date'
-    if project:
-        url = self.add_url_param(url, 'project.project_number', project)
-    if service:
-        url = self.add_url_param(url, 'projectservice.name', service)
-    if label:
-        url = self.add_url_param(url, 'type.label', label)
-    if revenue_group_id:
-        url = self.add_url_param(url, 'projectservice.revenue_group_id', revenue_group_id)
-    if hourstype:
-        url = self.add_url_param(url, 'type.label', hourstype)
-    if employee:
-        url = self.add_url_param(url, 'employee.name', employee)
-    if from_date:
-        url = self.add_url_param(url, 'start_date', from_date, 'ge')
-    if until_date:
-        url = self.add_url_param(url, 'start_date', until_date, 'le')
+
+    fields = { 'employee_name':'employee.name',
+               'project':'project.project_number',
+               'service':'projectservice.name',
+               'hourstype':'type.label',
+               'start_date': 'start_date',
+               'end_date':'end_date',
+               'revenuegroup_id':'projectservice.revenue_group_id'}
+    for field, extended_field in fields.items():
+        if field in filter.keys():
+            value = filter[field]
+            operator = ''
+            if field == 'start_date':
+                operator = 'ge'
+            elif field == 'end_date':
+                operator = 'le'
+            url = self.add_url_param(url, extended_field, value, operator)
+
     result = self.call(url)
     return result
 
 
-def hours_data_simplified(
-    self,
-    project: str = None,
-    service: str = None,
-    label: str = None,
-    revenue_group_id: str = None,
-    hourstype: str = None,
-    employee: str = None,
-    from_date: str = '',
-    until_date: str = '',
-):
-    data = self.hours_data(project, service, label, revenue_group_id, hourstype, employee, from_date, until_date)
+def hours_simple(self, filter):
+    data = self.hours(filter)
     result = [
         {
             'employee': d['employee']['name'],
@@ -68,34 +54,14 @@ def hours_data_simplified(
     return result
 
 
-def hours_count(
-    self,
-    project: str = None,
-    service: str = None,
-    label: str = None,
-    revenue_group_id: str = None,
-    hourstype: str = None,
-    employee: str = None,
-    from_date: str = '',
-    until_date: str = '',
-):
-    hours = self.hours_data(project, service, label, revenue_group_id, hourstype, employee, from_date, until_date)
+def hours_count(self, filter):
+    hours = self.hours(filter)
     # todo: Correcties eraf trekken
     return sum([d['hours'] for d in hours])
 
 
-def turnover(
-    self,
-    project: str = None,
-    service: str = None,
-    label: str = None,
-    revenue_group_id: str = None,
-    hourstype: str = None,
-    employee: str = None,
-    from_date: str = '',
-    until_date: str = '',
-):
-    hours = self.hours_data(project, service, label, revenue_group_id, hourstype, employee, from_date, until_date)
+def turnover(self, filter):
+    hours = self.hours(filter)
     # todo:  Correcties eraf trekken
     if not hours:
         # print( 'Could not calculate hours', locals())
