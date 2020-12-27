@@ -9,7 +9,7 @@ def hourstype_simple(self):
     return {d['id']: {'type': d['type'], 'tariff': d['tariff'], 'label': d['label']} for d in result}
 
 
-def hours(self, filter):
+def hours(self, filter={}):
     url = '/hours/hours?sort=start_date'
 
     fields = {
@@ -35,7 +35,7 @@ def hours(self, filter):
     return result
 
 
-def hours_simple(self, filter):
+def hours_simple(self, filter={}):
     data = self.hours(filter)
     result = [
         {
@@ -57,13 +57,13 @@ def hours_simple(self, filter):
     return result
 
 
-def hours_count(self, filter):
+def hours_count(self, filter={}):
     hours = self.hours(filter)
     # todo: Correcties eraf trekken
     return sum([d['hours'] for d in hours])
 
 
-def turnover(self, filter):
+def turnover(self, filter={}):
     hours = self.hours(filter)
     # todo:  Correcties eraf trekken
     if not hours:

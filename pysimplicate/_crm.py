@@ -3,7 +3,7 @@ def organisation(self):
     return result
 
 
-def person(self, filter):
+def person(self, filter={}):
     url = '/crm/person'
     for field in ('first_name', 'last_name'):
         if field in filter.keys():

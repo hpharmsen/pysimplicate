@@ -1,4 +1,4 @@
-def project(self, filter):
+def project(self, filter={}):
     url = '/projects/project?sort=-updated_at'
 
     for field in ('from_date', 'until_date', 'status'):

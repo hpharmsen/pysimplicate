@@ -1,3 +1,4 @@
+import sys
 import time
 import requests
 
@@ -11,7 +12,7 @@ class Simplicate:
     from ._crm import organisation, person
     from ._employee import employee
     from ._hours import hourstype, hourstype_simple, hours, hours_simple, hours_count, turnover
-    from ._hrm import leave, leave_simplified, leavetype, leavebalance
+    from ._hrm import leave, leave_simple, leavetype, leavebalance
     from ._invoices import invoice, invoice_per_year
     from ._projects import project, projectstatus, projectstatus_dict, service, purchasetypes
     from ._sales import revenuegroup, revenuegroup_dict
@@ -67,3 +68,8 @@ class Simplicate:
         delimiter = '&' if url.count('?') else '?'
         operator = f'[{operator}]' if operator else ''
         return url + delimiter + f'q[{key}]' + operator + '=' + requests.utils.quote(str(value))
+
+    def check_filter(self, function_name, fields, filter):
+        # Checks if the keys in the passed filter are all supported by the function
+        unused_keys = [k for k in filter.keys() if k not in fields]
+        assert not unused_keys, f'parameter(s) {unused_keys} not supported by function {function_name}. Supported fields are {fields}'

@@ -1,7 +1,7 @@
 # todo: add filter for invoice status
 
 
-def invoice(self, filter):
+def invoice(self, filter={}):
     url = '/invoices/invoice?sort=id'
     for field in ('from_date', 'until_date'):
         if field in filter.keys():

@@ -2,7 +2,7 @@ from beautiful_date import *
 
 # Fetches all leave types
 # Returns list of {id, employee, start_date, end_date, year, description}
-def leave(self, filter):
+def leave(self, filter={}):
     url = '/hrm/leave'
     fields = {
         'employee_name': 'employee.name',
@@ -28,7 +28,7 @@ def leave(self, filter):
     return result
 
 
-def leave_simplified(self, filter):
+def leave_simple(self, filter={}):
     # Returns list of {employee_name, start_date, days, description}
     leaves = leave(self, filter)
     if not leaves:
@@ -39,9 +39,8 @@ def leave_simplified(self, filter):
         if not l.get('start_date'):
             continue
         start = _to_date(l['start_date'])
-        end = _to_date(l['end_date'])
-        days = (end - start).days
-        res += [{'name': l['employee']['name'], 'start_day': start[:], 'days': days, 'description': l['description']}]
+        days = l['hours'] / 8
+        res += [{'id':l['id'], 'name': l['employee']['name'], 'start_day': start[:], 'days': days, 'description': l['description']}]
     return res
 
 
@@ -62,7 +61,7 @@ def leavetype(self, show_blocked=False):
 
 # Fetches all leave balances for employees
 # Returns list of {employee (id, name), balance (in hours), year, leave_type (id, label)}
-def leavebalance(self, filter):
+def leavebalance(self, filter={}):
     url = '/hrm/leavebalance'
     fields = {
         'employee_name': 'employee.name',
