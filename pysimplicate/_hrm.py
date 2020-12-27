@@ -40,7 +40,15 @@ def leave_simple(self, filter={}):
             continue
         start = _to_date(l['start_date'])
         days = l['hours'] / 8
-        res += [{'id':l['id'], 'name': l['employee']['name'], 'start_day': start[:], 'days': days, 'description': l['description']}]
+        res += [
+            {
+                'id': l['id'],
+                'name': l['employee']['name'],
+                'start_day': start[:],
+                'days': days,
+                'description': l['description'],
+            }
+        ]
     return res
 
 

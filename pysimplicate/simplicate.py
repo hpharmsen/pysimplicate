@@ -72,4 +72,6 @@ class Simplicate:
     def check_filter(self, function_name, fields, filter):
         # Checks if the keys in the passed filter are all supported by the function
         unused_keys = [k for k in filter.keys() if k not in fields]
-        assert not unused_keys, f'parameter(s) {unused_keys} not supported by function {function_name}. Supported fields are {fields}'
+        assert (
+            not unused_keys
+        ), f'parameter(s) {unused_keys} not supported by function {function_name}. Supported fields are {fields}'
