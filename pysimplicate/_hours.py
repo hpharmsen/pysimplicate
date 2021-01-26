@@ -18,7 +18,7 @@ def hours(self, filter={}):
         'service': 'projectservice.name',
         'hourstype': 'type.label',
         'start_date': 'start_date',
-        'end_date': 'end_date',
+        'end_date': 'start_date',
         'revenuegroup_id': 'projectservice.revenue_group_id',
     }
     for field, extended_field in fields.items():
@@ -59,19 +59,20 @@ def hours_simple(self, filter={}):
 
 def hours_count(self, filter={}):
     hours = self.hours(filter)
-    # todo: Correcties eraf trekken
-    return sum([d['hours'] for d in hours])
+    return sum([d['hours'] + d['corrections']['amount'] for d in hours])
 
 
 def turnover(self, filter={}):
     hours = self.hours(filter)
-    # todo:  Correcties eraf trekken
     if not hours:
         # print( 'Could not calculate hours', locals())
         return 0
     for h in hours:
-        if h['corrections']['amount'] > 0:
-            corrections = h['corrections']['amount']
-            corrections += 0
+        h['hours'] += h['corrections']['amount']
 
     return sum([d['hours'] * d['tariff'] for d in hours])
+
+
+def book_hours(self, fields):
+    url = '/hours/hours'
+    self.post(url, fields)

@@ -1,7 +1,7 @@
 def project(self, filter={}):
     url = '/projects/project?sort=-updated_at'
 
-    for field in ('from_date', 'until_date', 'status'):
+    for field in ('from_date', 'until_date', 'status', 'active'):
         if field in filter.keys():
             value = filter[field]
             if field == 'from_date':
@@ -9,8 +9,11 @@ def project(self, filter={}):
             if field == 'until_date':
                 url = self.add_url_param(url, 'created', value, 'le')
             if field == 'status':
-                assert value in projectstatus_dict().keys(), "Status can only be one of {projectstatus_dict.keys()}"
-                url = self.add_url_param(url, 'project_status.id', projectstatus_dict()[value])
+                status_options = self.projectstatus_dict().keys()
+                assert value in status_options, f"Status can only be one of {status_options}"
+                url = self.add_url_param(url, 'project_status.id', self.projectstatus_dict()[value])
+            if field == 'active' and value:
+                url = self.add_url_param(url, 'project_status.id', self.projectstatus_dict()['tab_pactive'])
     result = self.call(url)
     return result
 
@@ -24,13 +27,28 @@ def projectstatus(self):
 def projectstatus_dict(self):
     # Retrieves the list of project statusses and caches it
     if not hasattr(self, '_projectstatus_dict'):
-        self._project_statusdict = {status['label']: status['id'] for status in self.project_status()}
+        self._projectstatus_dict = {status['label']: status['id'] for status in self.projectstatus()}
     return self._projectstatus_dict
 
 
+def project_by_name(self, name, filter={}):
+    name = name.lower()
+    return [
+        p
+        for p in self.project(filter)
+        if p['name'].lower().count(name) or p['organization']['name'].lower().count(name)
+    ]
+
+
 # Diensten
-def service(self):
+def service(self, filter={}):
     url = '/projects/service'
+    fields = 'status'
+    self.check_filter('service', fields, filter)
+    for field in fields:
+        if field in filter.keys():
+            value = filter[field]
+            url = self.add_url_param(url, field, value)
     result = self.call(url)
     return result
 

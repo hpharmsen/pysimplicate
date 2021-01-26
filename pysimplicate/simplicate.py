@@ -1,4 +1,4 @@
-import sys
+import json
 import time
 import requests
 
@@ -11,10 +11,10 @@ class Simplicate:
 
     from ._crm import organisation, person
     from ._employee import employee
-    from ._hours import hourstype, hourstype_simple, hours, hours_simple, hours_count, turnover
+    from ._hours import hourstype, hourstype_simple, hours, hours_simple, hours_count, turnover, book_hours
     from ._hrm import leave, leave_simple, leavetype, leavebalance
     from ._invoices import invoice, invoice_per_year
-    from ._projects import project, projectstatus, projectstatus_dict, service, purchasetypes
+    from ._projects import project, project_by_name, projectstatus, projectstatus_dict, service, purchasetypes
     from ._sales import revenuegroup, revenuegroup_dict
     from ._service import defaultservice
 
@@ -64,7 +64,19 @@ class Simplicate:
                 pass  # There was no respons yet
             return False
 
+    def post(self, url_path: str, post_fields: dict):
+        headers = {
+            'Authentication-Key': self.api_key,
+            'Authentication-Secret': self.api_secret,
+            'Content-type': 'application/json',
+            'Accept': 'text/plain',
+        }
+        url = f'https://{ self.subdomain}.simplicate.nl/api/v2{url_path}'
+        response = requests.post(url, json=post_fields, headers=headers)
+        return response
+
     def add_url_param(self, url, key, value, operator=''):
+        # Adds parameter to the simplicate API url in the form: &q[key]=value or &q[key][operator]=value
         delimiter = '&' if url.count('?') else '?'
         operator = f'[{operator}]' if operator else ''
         return url + delimiter + f'q[{key}]' + operator + '=' + requests.utils.quote(str(value))

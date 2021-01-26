@@ -1,6 +1,3 @@
-import sys
-
-
 def employee(self, filter={}):
     url = '/hrm/employee'
 
