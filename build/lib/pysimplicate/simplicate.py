@@ -86,4 +86,4 @@ class Simplicate:
         unused_keys = [k for k in filter.keys() if k not in fields]
         assert (
             not unused_keys
-        ), f'parameter(s) {unused_keys} not supported by function {function_name}. Supported fields are {fields}'
+        ), f'parameter(s) {unused_keys} not supported by function {function_name}. Supported fields are {tuple(fields.keys())}'
