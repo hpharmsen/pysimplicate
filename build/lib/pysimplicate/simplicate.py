@@ -15,7 +15,7 @@ class Simplicate:
     from ._hrm import leave, leave_simple, leavetype, leavebalance
     from ._invoices import invoice, invoice_per_year
     from ._projects import project, project_by_name, projectstatus, projectstatus_dict, service, purchasetypes
-    from ._sales import revenuegroup, revenuegroup_dict
+    from ._sales import revenuegroup, revenuegroup_dict, sales, sales_flat
     from ._service import defaultservice
 
     def call(self, url_path: str):
