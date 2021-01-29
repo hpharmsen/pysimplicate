@@ -1,5 +1,7 @@
 import datetime
 
+DATE_FORMAT = '%Y-%m-%d'
+
 
 def hourstype(self):
     url = '/hours/hourstype'
@@ -27,12 +29,15 @@ def hours(self, filter={}):
     }
     self.check_filter('hours', fields, filter)
     if 'day' in filter.keys():
-        filter['start_date'] = filter['day']
-        filter['end_date'] = (
-            datetime.datetime.strptime(filter['day'], '%Y-%m-%d') + datetime.timedelta(days=1)
-        ).strftime('%Y-%m-%d')
+        day = filter['day']
+        if type(day) != str:
+            day = day.strftime(DATE_FORMAT)
+        filter['start_date'] = day
+        filter['end_date'] = (datetime.datetime.strptime(day, DATE_FORMAT) + datetime.timedelta(days=1)).strftime(
+            DATE_FORMAT
+        )
         del filter['day']
-        print(filter)
+        # print(filter)
 
     for field, extended_field in fields.items():
         if field in filter.keys():
