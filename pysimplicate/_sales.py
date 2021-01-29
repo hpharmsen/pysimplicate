@@ -22,6 +22,7 @@ def sales_flat(self):
     return [
         {
             'organization': s['organization']['name'],
+            'subject': s['subject'],
             'employee': double_get(s, 'responsible_employee', 'name'),
             'progress_label': s['progress']['label'],
             'progress_position': s['progress']['position'],
