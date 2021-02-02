@@ -65,6 +65,7 @@ def hours_simple(self, filter={}):
             'label': d['type']['label'],
             'billable': d['billable'],
             'tariff': d['tariff'],
+            'service_tariff': d['type']['tariff'],
             'hours': d['hours'],
             'start_date': d['start_date'],
             'status': d['status'],
