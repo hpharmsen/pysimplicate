@@ -12,7 +12,7 @@ class Simplicate:
     from ._crm import organisation, person
     from ._employee import employee
     from ._hours import hourstype, hourstype_simple, hours, hours_simple, hours_count, turnover, book_hours
-    from ._hrm import leave, leave_simple, leavetype, leavebalance
+    from ._hrm import contract, leave, leave_simple, leavetype, leavebalance
     from ._invoices import invoice, invoice_per_year
     from ._projects import project, project_by_name, projectstatus, projectstatus_dict, service, purchasetypes
     from ._sales import revenuegroup, revenuegroup_dict, sales, sales_flat
