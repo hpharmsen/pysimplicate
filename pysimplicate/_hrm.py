@@ -2,10 +2,11 @@ from beautiful_date import *
 
 
 # Fetches all contracts
-def contract( self ):
+def contract(self):
     url = '/hrm/contract'
     result = self.call(url)
     return result
+
 
 # Fetches all leave types
 # Returns list of {id, employee, start_date, end_date, year, description}
