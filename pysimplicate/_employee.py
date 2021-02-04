@@ -1,7 +1,7 @@
 def employee(self, filter={}):
     url = '/hrm/employee'
 
-    fields = ('first_name', 'last_name', 'employment_status')
+    fields = ('name', 'first_name', 'last_name', 'employment_status')
     self.check_filter('employee', fields, filter)
     for field in fields:
         if field in filter.keys():
