@@ -1,7 +1,7 @@
 def project(self, filter={}):
     url = '/projects/project?sort=-updated_at'
 
-    for field in ('from_date', 'until_date', 'status', 'active'):
+    for field in ('from_date', 'until_date', 'status', 'active', 'track_hours'):
         if field in filter.keys():
             value = filter[field]
             if field == 'from_date':
@@ -14,6 +14,8 @@ def project(self, filter={}):
                 url = self.add_url_param(url, 'project_status.id', self.projectstatus_dict()[value])
             if field == 'active' and value:
                 url = self.add_url_param(url, 'project_status.id', self.projectstatus_dict()['tab_pactive'])
+            if field == 'track_hours':
+                url = self.add_url_param(url, 'track_hours', value)
     result = self.call(url)
     return result
 
