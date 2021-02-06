@@ -98,6 +98,6 @@ def book_hours(self, fields):
     return self.post(url, fields)
 
 
-def hours_approval( self, fields):
+def hours_approval(self, fields):
     url = '/hours/approval'
     return self.post(url, fields)
