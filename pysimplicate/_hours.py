@@ -96,3 +96,8 @@ def turnover(self, filter={}):
 def book_hours(self, fields):
     url = '/hours/hours'
     return self.post(url, fields)
+
+
+def hours_approval( self, fields):
+    url = '/hours/approval'
+    return self.post(url, fields)
