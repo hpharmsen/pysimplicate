@@ -7,6 +7,7 @@ def contract(self):
     result = self.call(url)
     return result
 
+
 # Time tables
 def timetable(self, filter={}):
     url = '/hrm/timetable'
@@ -28,16 +29,18 @@ def timetable(self, filter={}):
     result = self.call(url)
     return result
 
-def timetable_simple( self, employee_name ):
-    table = self.timetable( {'employee_name':employee_name})[-1]
-    res = [(table['even_week'][f'day_{i}']['hours'],table['odd_week'][f'day_{i}']['hours']) for i in range(1,8)]
+
+def timetable_simple(self, employee_name):
+    table = self.timetable({'employee_name': employee_name})[-1]
+    res = [(table['even_week'][f'day_{i}']['hours'], table['odd_week'][f'day_{i}']['hours']) for i in range(1, 8)]
     return res
 
-def timetable_today( self, employee_name ):
-    day_of_week = datetime.datetime.today().weekday() # weekday is 0 for Monday
+
+def timetable_today(self, employee_name):
+    day_of_week = datetime.datetime.today().weekday()  # weekday is 0 for Monday
     week_number = datetime.datetime.today().isocalendar()[1]
     index = week_number % 2
-    table = self.timetable_simple( employee_name )
+    table = self.timetable_simple(employee_name)
     res = table[day_of_week][index]
     return res
 
