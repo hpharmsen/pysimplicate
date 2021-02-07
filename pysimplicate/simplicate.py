@@ -21,7 +21,7 @@ class Simplicate:
         book_hours,
         hours_approval,
     )
-    from ._hrm import contract, leave, leave_simple, leavetype, leavebalance
+    from ._hrm import contract, leave, leave_simple, leavetype, leavebalance, timetable, timetable_simple, timetable_today
     from ._invoices import invoice, invoice_per_year
     from ._projects import project, project_by_name, projectstatus, projectstatus_dict, service, purchasetypes
     from ._sales import revenuegroup, revenuegroup_dict, sales, sales_flat

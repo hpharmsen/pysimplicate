@@ -1,11 +1,45 @@
 from beautiful_date import *
-
+import datetime
 
 # Fetches all contracts
 def contract(self):
     url = '/hrm/contract'
     result = self.call(url)
     return result
+
+# Time tables
+def timetable(self, filter={}):
+    url = '/hrm/timetable'
+    fields = {
+        'employee_name': 'employee.name',
+        'start_date': 'start_date',
+        'end_date': 'end_date',
+    }
+    for field, extended_field in fields.items():
+        if field in filter.keys():
+            value = filter[field]
+            operator = ''
+            if field == 'start_date':
+                operator = 'ge'
+            elif field == 'end_date':
+                operator = 'le'
+            url = self.add_url_param(url, extended_field, value, operator)
+
+    result = self.call(url)
+    return result
+
+def timetable_simple( self, employee_name ):
+    table = self.timetable( {'employee_name':employee_name})[-1]
+    res = [(table['even_week'][f'day_{i}']['hours'],table['odd_week'][f'day_{i}']['hours']) for i in range(1,8)]
+    return res
+
+def timetable_today( self, employee_name ):
+    day_of_week = datetime.datetime.today().weekday() # weekday is 0 for Monday
+    week_number = datetime.datetime.today().isocalendar()[1]
+    index = week_number % 2
+    table = self.timetable_simple( employee_name )
+    res = table[day_of_week][index]
+    return res
 
 
 # Fetches all leave types
