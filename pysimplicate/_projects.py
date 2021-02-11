@@ -43,7 +43,7 @@ def project_by_name(self, name, filter={}):
 # Diensten
 def service(self, filter={}):
     url = '/projects/service'
-    fields = ('status', 'track_hours')
+    fields = ('project_id', 'status', 'track_hours')
     self.check_filter('service', fields, filter)
     for field in fields:
         if field in filter.keys():
