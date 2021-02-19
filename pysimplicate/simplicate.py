@@ -4,6 +4,7 @@ import requests
 
 # TODO: /projects/project naar composed_call
 
+
 class Simplicate:
     def __init__(self, subdomain, api_key, api_secret):
         self.subdomain = subdomain
@@ -95,8 +96,8 @@ class Simplicate:
         return response
 
     def composed_call(self, url, fields, filter):
-        if type(fields)==tuple:
-            fields = {field:field for field in fields}
+        if type(fields) == tuple:
+            fields = {field: field for field in fields}
         self.check_filter(url, fields, filter)
 
         for field, extended_field in fields.items():
@@ -114,8 +115,6 @@ class Simplicate:
         result = self.call(url)
         return result
 
-
-
     def add_url_param(self, url, key, value, operator=''):
         # Adds parameter to the simplicate API url in the form: &q[key]=value or &q[key][operator]=value
         delimiter = '&' if url.count('?') else '?'
@@ -128,4 +127,3 @@ class Simplicate:
         assert (
             not unused_keys
         ), f'parameter(s) {unused_keys} not supported by function {function_name}. Supported fields are {tuple(fields.keys())}'
-

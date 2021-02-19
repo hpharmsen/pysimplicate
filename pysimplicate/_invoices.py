@@ -1,10 +1,10 @@
 # todo: add filter for invoice status
 
+
 def invoice(self, filter={}):
     url = '/invoices/invoice?sort=id'
-    fields = {'from_date':'date',
-              'until_date':'date'}
-    return self.composed_call( url, fields, filter)
+    fields = {'from_date': 'date', 'until_date': 'date'}
+    return self.composed_call(url, fields, filter)
 
 
 def invoice_per_year(self, year):

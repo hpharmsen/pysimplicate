@@ -48,7 +48,7 @@ def project_by_name(self, name, filter={}):
 def service(self, filter={}):
     url = '/projects/service'
     fields = ('project_id', 'status', 'track_hours')
-    return self.composed_call( url, fields, filter)
+    return self.composed_call(url, fields, filter)
 
 
 # Kostensoorten

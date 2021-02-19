@@ -36,8 +36,7 @@ def hours(self, filter={}):
         )
         del filter['day']
 
-    return self.composed_call( url, fields, filter)
-
+    return self.composed_call(url, fields, filter)
 
 
 def hours_simple(self, filter={}):

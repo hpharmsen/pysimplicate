@@ -113,7 +113,7 @@ def leavebalance(self, filter={}):
     return self.composed_call(url, fields, filter)
 
 
-def absence( self, filter={}):
+def absence(self, filter={}):
     url = '/hrm/absence'
     fields = {
         'employee_name': 'employee.name',
@@ -122,4 +122,3 @@ def absence( self, filter={}):
         'end_date': 'end_date',
     }
     return self.composed_call(url, fields, filter)
-

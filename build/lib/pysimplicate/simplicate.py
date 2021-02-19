@@ -2,6 +2,8 @@ import json
 import time
 import requests
 
+# TODO: /projects/project naar composed_call
+
 
 class Simplicate:
     def __init__(self, subdomain, api_key, api_secret):
@@ -92,6 +94,26 @@ class Simplicate:
         url = f'https://{ self.subdomain}.simplicate.nl/api/v2{url_path}'
         response = requests.post(url, json=post_fields, headers=headers)
         return response
+
+    def composed_call(self, url, fields, filter):
+        if type(fields) == tuple:
+            fields = {field: field for field in fields}
+        self.check_filter(url, fields, filter)
+
+        for field, extended_field in fields.items():
+            if field in filter.keys():
+                value = filter[field]
+                operator = ''
+                if field == 'start_date':
+                    operator = 'ge'
+                elif field in ('end_date', 'until_date'):
+                    operator = 'le'
+                elif field == 'affects_balance':
+                    value = str(int(value))
+                url = self.add_url_param(url, extended_field, value, operator)
+
+        result = self.call(url)
+        return result
 
     def add_url_param(self, url, key, value, operator=''):
         # Adds parameter to the simplicate API url in the form: &q[key]=value or &q[key][operator]=value
