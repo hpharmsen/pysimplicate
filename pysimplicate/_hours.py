@@ -24,10 +24,8 @@ def hours(self, filter={}):
         'hourstype': 'type.label',
         'start_date': 'start_date',
         'end_date': 'start_date',
-        'day': 'start_date',
         'revenuegroup_id': 'projectservice.revenue_group_id',
     }
-    self.check_filter('hours', fields, filter)
     if 'day' in filter.keys():
         day = filter['day']
         if type(day) != str:
@@ -37,20 +35,9 @@ def hours(self, filter={}):
             DATE_FORMAT
         )
         del filter['day']
-        # print(filter)
 
-    for field, extended_field in fields.items():
-        if field in filter.keys():
-            value = filter[field]
-            operator = ''
-            if field == 'start_date':
-                operator = 'ge'
-            elif field == 'end_date':
-                operator = 'le'
-            url = self.add_url_param(url, extended_field, value, operator)
+    return self.composed_call( url, fields, filter)
 
-    result = self.call(url)
-    return result
 
 
 def hours_simple(self, filter={}):

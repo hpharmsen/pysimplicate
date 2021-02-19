@@ -16,6 +16,7 @@ def timetable(self, filter={}):
         'start_date': 'start_date',
         'end_date': 'end_date',
     }
+    self.check_filter('timetable', fields, filter)
     for field, extended_field in fields.items():
         if field in filter.keys():
             value = filter[field]
@@ -57,20 +58,7 @@ def leave(self, filter={}):
         'start_date': 'start_date',
         'end_date': 'end_date',
     }
-    for field, extended_field in fields.items():
-        if field in filter.keys():
-            value = filter[field]
-            operator = ''
-            if field == 'affects_balance':
-                value = str(int(value))
-            elif field == 'start_date':
-                operator = 'ge'
-            elif field == 'end_date':
-                operator = 'le'
-            url = self.add_url_param(url, extended_field, value, operator)
-
-    result = self.call(url)
-    return result
+    return self.composed_call(url, fields, filter)
 
 
 def leave_simple(self, filter={}):
@@ -122,12 +110,16 @@ def leavebalance(self, filter={}):
         'leavetype_label': 'leavetype.label',
         'affects_balance': 'leavetype.affects_balance',
     }
-    for field, extended_field in fields.items():
-        if field in filter.keys():
-            value = filter[field]
-            if field == 'affects_balance':
-                value = str(int(value))
-            url = self.add_url_param(url, extended_field, value)
+    return self.composed_call(url, fields, filter)
 
-    result = self.call(url)
-    return result
+
+def absence( self, filter={}):
+    url = '/hrm/absence'
+    fields = {
+        'employee_name': 'employee.name',
+        'year': 'year',
+        'start_date': 'start_date',
+        'end_date': 'end_date',
+    }
+    return self.composed_call(url, fields, filter)
+

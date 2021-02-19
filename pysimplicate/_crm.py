@@ -5,8 +5,5 @@ def organisation(self):
 
 def person(self, filter={}):
     url = '/crm/person'
-    for field in ('first_name', 'last_name'):
-        if field in filter.keys():
-            url = self.add_url_param(url, field, filter[field])
-    result = self.call(url)
-    return result
+    fields = ('first_name','last_name')
+    return self.composed_call( url, fields, filter)

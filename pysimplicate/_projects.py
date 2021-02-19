@@ -1,5 +1,9 @@
 def project(self, filter={}):
     url = '/projects/project?sort=-updated_at'
+    # fields = {'from_date':'modified',
+    #           'until_date':'created',
+    #           'status':'project_status.id',
+    #           'active':'active'}
 
     for field in ('from_date', 'until_date', 'status', 'active'):
         if field in filter.keys():
@@ -44,13 +48,7 @@ def project_by_name(self, name, filter={}):
 def service(self, filter={}):
     url = '/projects/service'
     fields = ('project_id', 'status', 'track_hours')
-    self.check_filter('service', fields, filter)
-    for field in fields:
-        if field in filter.keys():
-            value = filter[field]
-            url = self.add_url_param(url, field, value)
-    result = self.call(url)
-    return result
+    return self.composed_call( url, fields, filter)
 
 
 # Kostensoorten

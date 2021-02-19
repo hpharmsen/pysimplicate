@@ -1,12 +1,5 @@
 def employee(self, filter={}):
     url = '/hrm/employee'
-
     fields = ('name', 'first_name', 'last_name', 'employment_status')
-    self.check_filter('employee', fields, filter)
-    for field in fields:
-        if field in filter.keys():
-            # value = '1' if field=='active' else filter[field]
-            url = self.add_url_param(url, field, filter[field])
+    return self.composed_call( url, fields, filter)
 
-    result = self.call(url)
-    return result

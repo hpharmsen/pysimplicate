@@ -13,7 +13,7 @@ def revenuegroup_dict(self):
 
 
 def sales(self):
-    url = '/sales/sales?'
+    url = '/sales/sales'
     result = self.call(url)
     return result
 
