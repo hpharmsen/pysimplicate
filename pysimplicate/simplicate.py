@@ -32,6 +32,7 @@ class Simplicate:
         timetable,
         timetable_simple,
         timetable_today,
+        absence,
     )
     from ._invoices import invoice, invoice_per_year
     from ._projects import project, project_by_name, projectstatus, projectstatus_dict, service, purchasetypes
