@@ -105,7 +105,7 @@ class Simplicate:
             if field in filter.keys():
                 value = filter[field]
                 operator = ''
-                if field == 'start_date':
+                if field in ('start_date', 'from_date'):
                     operator = 'ge'
                 elif field in ('end_date', 'until_date'):
                     operator = 'le'
