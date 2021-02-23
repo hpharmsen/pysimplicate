@@ -3,10 +3,12 @@
 
 def invoice(self, filter={}):
     url = '/invoices/invoice?sort=id'
-    fields = {'from_date': 'date',
-              'until_date': 'date',
-              'project_number': 'projects.project_number',
-              'invoice_number':'invoice_number'}
+    fields = {
+        'from_date': 'date',
+        'until_date': 'date',
+        'project_number': 'projects.project_number',
+        'invoice_number': 'invoice_number',
+    }
     return self.composed_call(url, fields, filter)
 
 
