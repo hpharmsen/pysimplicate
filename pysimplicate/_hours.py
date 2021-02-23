@@ -54,7 +54,7 @@ def hours_simple(self, filter={}):
             'service_tariff': d['type']['tariff'],
             'hours': d['hours'],
             'start_date': d['start_date'],
-            'status': d.get('status',''),
+            'status': d.get('status', ''),
             'corrections': d['corrections'],
             'note': d['note'],
         }
