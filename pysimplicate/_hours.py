@@ -1,5 +1,3 @@
-
-
 def hourstype(self):
     url = '/hours/hourstype'
     result = self.call(url)

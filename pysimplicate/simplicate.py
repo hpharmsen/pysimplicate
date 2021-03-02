@@ -7,7 +7,6 @@ DATE_FORMAT = '%Y-%m-%d'
 # TODO: /projects/project naar composed_call
 
 
-
 class Simplicate:
     def __init__(self, subdomain, api_key, api_secret):
         self.subdomain = subdomain
