@@ -56,7 +56,7 @@ def hours_simple(self, filter={}):
             'start_date': d['start_date'],
             'status': d.get('status', ''),
             'corrections': d['corrections'],
-            'note': d['note'],
+            'note': d.get('note',''),
         }
         for d in data
     ]
