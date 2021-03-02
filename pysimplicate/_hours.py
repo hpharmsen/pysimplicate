@@ -1,6 +1,3 @@
-import datetime
-
-DATE_FORMAT = '%Y-%m-%d'
 
 
 def hourstype(self):
@@ -26,15 +23,6 @@ def hours(self, filter={}):
         'end_date': 'start_date',
         'revenuegroup_id': 'projectservice.revenue_group_id',
     }
-    if 'day' in filter.keys():
-        day = filter['day']
-        if type(day) != str:
-            day = day.strftime(DATE_FORMAT)
-        filter['start_date'] = day
-        filter['end_date'] = (datetime.datetime.strptime(day, DATE_FORMAT) + datetime.timedelta(days=1)).strftime(
-            DATE_FORMAT
-        )
-        del filter['day']
 
     return self.composed_call(url, fields, filter)
 

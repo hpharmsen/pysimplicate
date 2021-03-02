@@ -56,7 +56,7 @@ def leave(self, filter={}):
         'leavetype_label': 'leavetype.label',
         'affects_balance': 'leavetype.affects_balance',
         'start_date': 'start_date',
-        'end_date': 'end_date',
+        'end_date': 'start_date',
     }
     return self.composed_call(url, fields, filter)
 

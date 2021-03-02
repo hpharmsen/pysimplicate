@@ -1,8 +1,11 @@
-import json
 import time
 import requests
+import datetime
+
+DATE_FORMAT = '%Y-%m-%d'
 
 # TODO: /projects/project naar composed_call
+
 
 
 class Simplicate:
@@ -99,6 +102,17 @@ class Simplicate:
     def composed_call(self, url, fields, filter):
         if type(fields) == tuple:
             fields = {field: field for field in fields}
+
+        if 'day' in filter.keys():
+            day = filter['day']
+            if type(day) != str:
+                day = day.strftime(DATE_FORMAT)
+            filter['start_date'] = day
+            filter['end_date'] = (datetime.datetime.strptime(day, DATE_FORMAT) + datetime.timedelta(days=1)).strftime(
+                DATE_FORMAT
+            )
+            del filter['day']
+
         self.check_filter(url, fields, filter)
 
         for field, extended_field in fields.items():
