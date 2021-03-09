@@ -30,6 +30,7 @@ def hours_simple(self, filter={}):
     result = [
         {
             'employee': d['employee']['name'],
+            'project_id': d['project']['id'],
             'project_name': d['project']['name'],
             'project_number': d['project']['project_number'],
             'service': d['projectservice']['name'],
