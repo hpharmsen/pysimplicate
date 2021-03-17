@@ -15,7 +15,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/hpharmsen/pysimplicate",
     packages=setuptools.find_packages(),
-    install_requires=['requests', 'beautiful-date'],
+    install_requires=['requests', 'beautiful-date', 'pandas'],
     classifiers=[
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.6",
