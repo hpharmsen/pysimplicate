@@ -15,7 +15,6 @@ class Simplicate:
         self.api_secret = api_secret
 
     from ._crm import organisation, person
-    from ._employee import employee
     from ._hours import (
         hourstype,
         hourstype_simple,

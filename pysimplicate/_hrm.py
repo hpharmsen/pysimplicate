@@ -1,3 +1,5 @@
+import datetime
+
 from beautiful_date import *
 
 # Fetches all contracts
