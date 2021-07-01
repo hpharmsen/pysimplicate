@@ -5,5 +5,5 @@ def organisation(self):
 
 def person(self, filter={}):
     url = '/crm/person'
-    fields = ('first_name', 'last_name')
+    fields = ('first_name', 'family_name', 'full_name')
     return self.composed_call(url, fields, filter)
