@@ -32,7 +32,7 @@ def hours_simple(self, filter={}):
             'employee': d['employee']['name'],
             'project_id': d['project']['id'],
             'project_name': d['project']['name'],
-            'project_number': d['project']['project_number'],
+            'project_number': d['project'].get('project_number',''),
             'service': d['projectservice']['name'],
             'type': d['type']['type'],
             'label': d['type']['label'],

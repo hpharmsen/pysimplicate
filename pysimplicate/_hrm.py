@@ -2,9 +2,11 @@ from beautiful_date import *
 import datetime
 
 # Fetches all contracts
-def contract(self):
+def contract(self, filter={}):
     url = '/hrm/contract'
-    result = self.call(url)
+    fields = {
+        'employee_name': 'employee.name'}
+    result = self.composed_call(url, fields, filter)
     return result
 
 
@@ -14,24 +16,27 @@ def timetable(self, filter={}):
     fields = {
         'employee_name': 'employee.name',
         'start_date': 'start_date',
-        'end_date': 'end_date',
+        'end_date': 'start_date',
     }
-    self.check_filter('timetable', fields, filter)
-    for field, extended_field in fields.items():
-        if field in filter.keys():
-            value = filter[field]
-            operator = ''
-            if field == 'start_date':
-                operator = 'ge'
-            elif field == 'end_date':
-                operator = 'le'
-            url = self.add_url_param(url, extended_field, value, operator)
-
-    result = self.call(url)
-    return result
+    return self.composed_call(url, fields, filter)
+    # self.check_filter('timetable', fields, filter)
+    # for field, extended_field in fields.items():
+    #     if field in filter.keys():
+    #         value = filter[field]
+    #         operator = ''
+    #         if field == 'start_date':
+    #             operator = 'ge'
+    #         elif field == 'end_date':
+    #             operator = 'le'
+    #         url = self.add_url_param(url, extended_field, value, operator)
+    #
+    # result = self.call(url)
+    # return result
 
 
 def timetable_simple(self, employee_name):
+    # in: employee name
+    # out: [(8, 8), (8, 8), (8, 8), (8, 8), (8, 8), (0, 0), (0, 0)]
     table = self.timetable({'employee_name': employee_name})[-1]
     res = [(table['even_week'][f'day_{i}']['hours'], table['odd_week'][f'day_{i}']['hours']) for i in range(1, 8)]
     return res
