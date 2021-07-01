@@ -1,5 +1,4 @@
 from beautiful_date import *
-import datetime
 
 # Fetches all contracts
 def contract(self, filter={}):
@@ -9,6 +8,15 @@ def contract(self, filter={}):
     result = self.composed_call(url, fields, filter)
     return result
 
+
+def employee( self, filter={}):
+    url = '/hrm/employee'
+    fields = {'full_name':'person.full_name',
+              'name':'name',
+              'status':'status.label',
+              'work_email':'work_email'}
+    result = self.composed_call(url, fields, filter)
+    return result
 
 # Time tables
 def timetable(self, filter={}):

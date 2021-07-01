@@ -28,6 +28,7 @@ class Simplicate:
     )
     from ._hrm import (
         contract,
+        employee,
         leave,
         leave_simple,
         leavetype,
