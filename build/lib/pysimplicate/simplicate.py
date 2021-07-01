@@ -15,7 +15,6 @@ class Simplicate:
         self.api_secret = api_secret
 
     from ._crm import organisation, person
-    from ._employee import employee
     from ._hours import (
         hourstype,
         hourstype_simple,
@@ -28,6 +27,7 @@ class Simplicate:
     )
     from ._hrm import (
         contract,
+        employee,
         leave,
         leave_simple,
         leavetype,
@@ -37,7 +37,7 @@ class Simplicate:
         timetable_today,
         absence,
     )
-    from ._invoices import invoice, invoice_per_year
+    from ._invoices import invoice, invoice_per_year, invoice_lines, invoice_lines_per_year
     from ._projects import project, project_by_name, projectstatus, projectstatus_dict, service, purchasetypes
     from ._sales import revenuegroup, revenuegroup_dict, sales, sales_flat
     from ._service import defaultservice
@@ -129,6 +129,15 @@ class Simplicate:
 
         result = self.call(url)
         return result
+
+    def direct_call(self, url):
+        my_headers = {'Authentication-Key': self.api_key, 'Authentication-Secret': self.api_secret}
+        response = requests.get(url, headers=my_headers, timeout=15)
+        response.raise_for_status()
+        # Code here will only run if the request is successful
+        # json = response.json()
+        # return json
+        return response.text
 
     def add_url_param(self, url, key, value, operator=''):
         # Adds parameter to the simplicate API url in the form: &q[key]=value or &q[key][operator]=value

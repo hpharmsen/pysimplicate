@@ -130,13 +130,13 @@ class Simplicate:
         result = self.call(url)
         return result
 
-    def direct_call(self, url ):
+    def direct_call(self, url):
         my_headers = {'Authentication-Key': self.api_key, 'Authentication-Secret': self.api_secret}
         response = requests.get(url, headers=my_headers, timeout=15)
         response.raise_for_status()
         # Code here will only run if the request is successful
-        #json = response.json()
-        #return json
+        # json = response.json()
+        # return json
         return response.text
 
     def add_url_param(self, url, key, value, operator=''):

@@ -2,7 +2,6 @@ README.md
 setup.py
 pysimplicate/__init__.py
 pysimplicate/_crm.py
-pysimplicate/_employee.py
 pysimplicate/_hours.py
 pysimplicate/_hrm.py
 pysimplicate/_invoices.py

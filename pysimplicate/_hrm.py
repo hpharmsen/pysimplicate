@@ -5,20 +5,17 @@ from beautiful_date import *
 # Fetches all contracts
 def contract(self, filter={}):
     url = '/hrm/contract'
-    fields = {
-        'employee_name': 'employee.name'}
+    fields = {'employee_name': 'employee.name'}
     result = self.composed_call(url, fields, filter)
     return result
 
 
-def employee( self, filter={}):
+def employee(self, filter={}):
     url = '/hrm/employee'
-    fields = {'full_name':'person.full_name',
-              'name':'name',
-              'status':'status.label',
-              'work_email':'work_email'}
+    fields = {'full_name': 'person.full_name', 'name': 'name', 'status': 'status.label', 'work_email': 'work_email'}
     result = self.composed_call(url, fields, filter)
     return result
+
 
 # Time tables
 def timetable(self, filter={}):

@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: pysimplicate
-Version: 0.6.10
+Version: 0.7.1
 Summary: Python wrapper for the Simplicate API
 Home-page: https://github.com/hpharmsen/pysimplicate
 Author: Hans-Peter Harmsen

@@ -38,7 +38,7 @@ def invoice_lines(self, filter={}):
     invoices = self.invoice(filter)
     result = []
     for inv in invoices:
-        a = len( inv['invoice_lines'])
+        a = len(inv['invoice_lines'])
         for line in inv['invoice_lines']:
 
             line_json = flatten_json(line)
@@ -46,6 +46,6 @@ def invoice_lines(self, filter={}):
             pass
     return None
 
+
 def invoice_lines_per_year(self, year):
     return self.invoice_lines({'from_date': f'{year}-01-01', 'until_date': f'{year}-12-31'})
-
