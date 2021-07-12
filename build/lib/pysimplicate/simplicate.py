@@ -122,7 +122,7 @@ class Simplicate:
                 if field in ('start_date', 'from_date'):
                     operator = 'ge'
                 elif field in ('end_date', 'until_date'):
-                    operator = 'le'
+                    operator = 'lt'
                 elif field == 'affects_balance':
                     value = str(int(value))
                 url = self.add_url_param(url, extended_field, value, operator)
