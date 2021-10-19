@@ -13,6 +13,7 @@ def hours(self, filter={}):
     url = '/hours/hours?sort=start_date'
 
     fields = {
+        'employee_id': 'employee.id',
         'employee_name': 'employee.name',
         'project': 'project.project_number',
         'service': 'projectservice.name',

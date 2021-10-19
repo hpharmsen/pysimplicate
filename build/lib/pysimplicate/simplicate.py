@@ -1,7 +1,6 @@
 import time
 import requests
 import datetime
-import pandas as pd
 
 DATE_FORMAT = '%Y-%m-%d'
 
@@ -13,6 +12,8 @@ class Simplicate:
         self.subdomain = subdomain
         self.api_key = api_key
         self.api_secret = api_secret
+        self.error = ''  # To store error messages
+        self.status_code = 0
 
     from ._crm import organisation, person
     from ._hours import (
@@ -59,6 +60,7 @@ class Simplicate:
                         time.sleep(10)  # Rate limit exceeded. Wait 10 secs and try again
                         continue
                     break
+                self.status_code = response.status_code
                 response.raise_for_status()
                 # Code here will only run if the request is successful
                 json = response.json()
@@ -66,20 +68,25 @@ class Simplicate:
                 offset += 100
                 if offset < json['metadata']['count']:
                     continue
+                self.error = ''
                 return result
             except requests.exceptions.HTTPError as errh:
                 print(errh)
+                self.error = errh
             except requests.exceptions.ConnectionError as errc:
                 connection_reset_tries += 1
                 if connection_reset_tries <= 2:
                     continue  # Try again
+                self.error = errc
                 print(errc)
             except requests.exceptions.Timeout as errt:
                 connection_reset_tries += 1
                 if connection_reset_tries <= 2:
                     continue  # Try again
+                self.error = errt
                 print(errt)
             except requests.exceptions.RequestException as err:
+                self.error = err
                 print(err)
             print(url2)
             try:
@@ -151,25 +158,3 @@ class Simplicate:
         assert (
             not unused_keys
         ), f'parameter(s) {unused_keys} not supported by function {function_name}. Supported fields are {tuple(fields.keys())}'
-
-    def to_pandas(self, function_result):
-        def flatten_json(y):
-            out = {}
-
-            def flatten(x, name=''):
-                if type(x) is dict:
-                    for a in x:
-                        flatten(x[a], name + a + '_')
-                elif type(x) is list:
-                    i = 0
-                    for a in x:
-                        flatten(a, name + str(i) + '_')
-                        i += 1
-                else:
-                    out[name[:-1]] = x
-
-            flatten(y)
-            return out
-
-        res = pd.DataFrame([flatten_json(a) for a in function_result])
-        return res

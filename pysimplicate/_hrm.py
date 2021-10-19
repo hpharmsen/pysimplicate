@@ -12,7 +12,13 @@ def contract(self, filter={}):
 
 def employee(self, filter={}):
     url = '/hrm/employee'
-    fields = {'full_name': 'person.full_name', 'name': 'name', 'status': 'status.label', 'work_email': 'work_email'}
+    fields = {
+        'full_name': 'person.full_name',
+        'name': 'name',
+        'status': 'status.label',
+        'work_email': 'work_email',
+        'function': 'function',
+    }
     result = self.composed_call(url, fields, filter)
     return result
 

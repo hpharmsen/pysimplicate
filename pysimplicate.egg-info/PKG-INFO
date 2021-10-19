@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: pysimplicate
-Version: 0.7.2
+Version: 0.7.3
 Summary: Python wrapper for the Simplicate API
 Home-page: https://github.com/hpharmsen/pysimplicate
 Author: Hans-Peter Harmsen
@@ -20,6 +20,7 @@ Classifier: Programming Language :: Python :: 3
 Classifier: Programming Language :: Python :: 3.6
 Classifier: Programming Language :: Python :: 3.7
 Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
 Classifier: License :: The Unlicense
 Classifier: Operating System :: OS Independent
 Requires-Python: >=3.6
