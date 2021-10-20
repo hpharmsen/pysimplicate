@@ -1,6 +1,7 @@
 import time
 import requests
 import datetime
+import pandas as pd
 
 DATE_FORMAT = '%Y-%m-%d'
 
@@ -158,3 +159,25 @@ class Simplicate:
         assert (
             not unused_keys
         ), f'parameter(s) {unused_keys} not supported by function {function_name}. Supported fields are {tuple(fields.keys())}'
+
+    def to_pandas(self, function_result):
+        def flatten_json(y):
+            out = {}
+
+            def flatten(x, name=''):
+                if type(x) is dict:
+                    for a in x:
+                        flatten(x[a], name + a + '_')
+                elif type(x) is list:
+                    i = 0
+                    for a in x:
+                        flatten(a, name + str(i) + '_')
+                        i += 1
+                else:
+                    out[name[:-1]] = x
+
+            flatten(y)
+            return out
+
+        res = pd.DataFrame([flatten_json(a) for a in function_result])
+        return res
