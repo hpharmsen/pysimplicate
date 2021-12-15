@@ -40,10 +40,10 @@ def invoiced_per_service(self, filter={}):
     result = defaultdict(float)
     for inv in invoices:
         if not inv.get('invoice_number'):
-            continue # conceptfactuur
+            continue  # conceptfactuur
         for line in inv['invoice_lines']:
             line_json = flatten_json(line)
-            service_id = line_json.get('service_id',line_json['default_service_id'])
+            service_id = line_json.get('service_id', line_json['default_service_id'])
             result[service_id] += float(line_json['price'])
     return result
 

@@ -39,7 +39,7 @@ class Simplicate:
         timetable_today,
         absence,
     )
-    from ._invoices import invoice, invoice_per_year, invoice_lines, invoice_lines_per_year
+    from ._invoices import invoice, invoice_per_year, invoiced_per_service, invoice_lines_per_year
     from ._projects import project, project_by_name, projectstatus, projectstatus_dict, service, purchasetypes
     from ._sales import revenuegroup, revenuegroup_dict, sales, sales_flat
     from ._service import defaultservice
