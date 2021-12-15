@@ -1,4 +1,5 @@
 # todo: add filter for invoice status
+from collections import defaultdict
 
 
 def invoice(self, filter={}):
@@ -16,7 +17,7 @@ def invoice_per_year(self, year):
     return self.invoice({'from_date': f'{year}-01-01', 'until_date': f'{year}-12-31'})
 
 
-def invoice_lines(self, filter={}):
+def invoiced_per_service(self, filter={}):
     def flatten_json(y):
         out = {}
 
@@ -36,16 +37,16 @@ def invoice_lines(self, filter={}):
         return out
 
     invoices = self.invoice(filter)
-    result = []
+    result = defaultdict(float)
     for inv in invoices:
-        a = len(inv['invoice_lines'])
+        if not inv.get('invoice_number'):
+            continue # conceptfactuur
         for line in inv['invoice_lines']:
-
             line_json = flatten_json(line)
-            inv_json = flatten_json(inv)
-            pass
-    return None
+            service_id = line_json.get('service_id',line_json['default_service_id'])
+            result[service_id] += float(line_json['price'])
+    return result
 
 
 def invoice_lines_per_year(self, year):
-    return self.invoice_lines({'from_date': f'{year}-01-01', 'until_date': f'{year}-12-31'})
+    return self.invoiced_per_service({'from_date': f'{year}-01-01', 'until_date': f'{year}-12-31'})
