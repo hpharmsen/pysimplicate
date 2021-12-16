@@ -44,7 +44,7 @@ def invoiced_per_service(self, filter={}):
         for line in inv['invoice_lines']:
             line_json = flatten_json(line)
             service_id = line_json.get('service_id', line_json['default_service_id'])
-            result[service_id] += float(line_json['price'])
+            result[service_id] += float(line_json['price']) * float(line_json['amount'])
     return result
 
 
