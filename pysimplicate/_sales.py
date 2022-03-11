@@ -30,7 +30,7 @@ def sales_flat(self):
             'start_date': s['start_date'],
             'modified': s['modified'],
             'source': double_get(s, 'source', 'name'),
-            'expected_revenue': s['expected_revenue'],
+            'expected_revenue': s.get('expected_revenue', 0),
             'chance_to_score': s['chance_to_score'],
             'value': s['expected_revenue'] * s['chance_to_score'] / 100,
         }
