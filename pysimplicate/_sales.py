@@ -32,7 +32,7 @@ def sales_flat(self):
             'source': double_get(s, 'source', 'name'),
             'expected_revenue': s.get('expected_revenue', 0),
             'chance_to_score': s['chance_to_score'],
-            'value': s['expected_revenue'] * s['chance_to_score'] / 100,
+            'value': s.get('expected_revenue', 0) * s.get('chance_to_score', 0) / 100,
         }
         for s in self.sales()
         if s['status']['label'] == 'OpportunityStatus_open'
