@@ -26,7 +26,7 @@ class Simplicate:
         turnover,
         book_hours,
         hours_approval,
-        delete_hours
+        delete_hours,
     )
     from ._hrm import (
         contract,

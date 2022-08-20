@@ -26,6 +26,7 @@ class Simplicate:
         turnover,
         book_hours,
         hours_approval,
+        delete_hours,
     )
     from ._hrm import (
         contract,
@@ -105,6 +106,17 @@ class Simplicate:
         }
         url = f'https://{ self.subdomain}.simplicate.nl/api/v2{url_path}'
         response = requests.post(url, json=post_fields, headers=headers)
+        return response
+
+    def delete(self, url_path: str):
+        headers = {
+            'Authentication-Key': self.api_key,
+            'Authentication-Secret': self.api_secret,
+            'Content-type': 'application/json',
+            'Accept': 'text/plain',
+        }
+        url = f'https://{ self.subdomain}.simplicate.nl/api/v2{url_path}'
+        response = requests.delete(url, headers=headers)
         return response
 
     def composed_call(self, url, fields, filter):

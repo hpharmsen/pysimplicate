@@ -76,6 +76,7 @@ def hours_approval(self, fields):
     url = '/hours/approval'
     return self.post(url, fields)
 
+
 def delete_hours(self, id):
     url = f'/hours/hours/{id}'
     return self.delete(url)
