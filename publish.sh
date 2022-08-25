@@ -12,7 +12,6 @@ git commit -v -a -m "publish  `date`" &&
 git push
 
 rm dist/*
-twine upload dist/*
 python -m build
 twine upload dist/*
 
