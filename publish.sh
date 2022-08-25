@@ -11,6 +11,11 @@ python setup.py sdist bdist_wheel &&
 git commit -v -a -m "publish  `date`" &&
 git push
 
+rm dist/*
+twine upload dist/*
+python -m build
+twine upload dist/*
+
 echo ""
 echo "published version" `cat version.txt`
 echo "to update installed package:"

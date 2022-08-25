@@ -1,8 +1,10 @@
 import setuptools
+from pathlib import Path
 
-with open("README.md", "r", encoding="utf-8") as fh:
+scriptpath = Path(__file__).resolve().parent
+with open(scriptpath / "README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
-with open("version.txt", "r") as fh:
+with open(scriptpath / "version.txt", "r") as fh:
     version = fh.read()
 
 setuptools.setup(

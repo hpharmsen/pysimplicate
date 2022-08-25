@@ -1,5 +1,8 @@
+LICENSE
+MANIFEST.in
 README.md
 setup.py
+version.txt
 pysimplicate/__init__.py
 pysimplicate/_crm.py
 pysimplicate/_hours.py
