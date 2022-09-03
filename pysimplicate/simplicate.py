@@ -90,10 +90,10 @@ class Simplicate:
             except requests.exceptions.RequestException as err:
                 self.error = err
                 print(err)
-            #print(url2)
-            #try:
+            # print(url2)
+            # try:
             #    print(response.content)
-            #except:
+            # except:
             #    pass  # There was no respons yet
             return False
 
