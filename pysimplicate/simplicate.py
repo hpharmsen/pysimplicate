@@ -66,7 +66,7 @@ class Simplicate:
                 response.raise_for_status()
                 # Code here will only run if the request is successful
                 json = response.json()
-                result += json['data']
+                result += [json['data']]
                 offset += 100
                 if offset < json['metadata']['count']:
                     continue
@@ -90,11 +90,11 @@ class Simplicate:
             except requests.exceptions.RequestException as err:
                 self.error = err
                 print(err)
-            print(url2)
-            try:
-                print(response.content)
-            except:
-                pass  # There was no respons yet
+            #print(url2)
+            #try:
+            #    print(response.content)
+            #except:
+            #    pass  # There was no respons yet
             return False
 
     def post(self, url_path: str, post_fields: dict):
