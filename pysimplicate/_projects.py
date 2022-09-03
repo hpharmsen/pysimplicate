@@ -5,19 +5,21 @@ def project(self, filter={}):
     #           'status':'project_status.id',
     #           'active':'active'}
 
-    for field in ('from_date', 'until_date', 'status', 'active'):
+    for field in ('from_date', 'until_date', 'status', 'active', 'project_number'):
         if field in filter.keys():
             value = filter[field]
             if field == 'from_date':
                 url = self.add_url_param(url, 'modified', value, 'ge')
-            if field == 'until_date':
+            elif field == 'until_date':
                 url = self.add_url_param(url, 'created', value, 'le')
-            if field == 'status':
+            elif field == 'status':
                 status_options = self.projectstatus_dict().keys()
                 assert value in status_options, f"Status can only be one of {status_options}"
                 url = self.add_url_param(url, 'project_status.id', self.projectstatus_dict()[value])
-            if field == 'active' and value:
+            elif field == 'active' and value:
                 url = self.add_url_param(url, 'project_status.id', self.projectstatus_dict()['tab_pactive'])
+            else:
+                url = self.add_url_param( url, field, value)
     result = self.call(url)
     return result
 

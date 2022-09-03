@@ -111,6 +111,17 @@ class Simplicate:
         response = requests.post(url, json=post_fields, headers=headers)
         return response
 
+    def put(self, url_path: str, put_fields: dict):
+        headers = {
+            'Authentication-Key': self.api_key,
+            'Authentication-Secret': self.api_secret,
+            'Content-type': 'application/json',
+            'Accept': 'text/plain',
+        }
+        url = f'https://{ self.subdomain}.simplicate.nl/api/v2{url_path}'
+        response = requests.put(url, json=put_fields, headers=headers)
+        return response
+
     def delete(self, url_path: str):
         headers = {
             'Authentication-Key': self.api_key,
