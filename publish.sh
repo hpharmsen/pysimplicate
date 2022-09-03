@@ -18,4 +18,4 @@ twine upload dist/*
 echo ""
 echo "published version" `cat version.txt`
 echo "to update installed package:"
-echo "pip install --upgrade --force-reinstall git+https://github.com/hpharmsen/pysimplicate"
+echo "pip install --upgrade --force-reinstall pysimplicate"
