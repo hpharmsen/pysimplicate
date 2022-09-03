@@ -1,10 +1,21 @@
 Metadata-Version: 2.1
 Name: pysimplicate
-Version: 0.8.3
+Version: 0.9.1
 Summary: Python wrapper for the Simplicate API
 Home-page: https://github.com/hpharmsen/pysimplicate
 Author: Hans-Peter Harmsen
 Author-email: hph@oberon.nl
+License: UNKNOWN
+Description: # PySimplicate
+        Simplicate api library for Python
+        
+        I wrote this package to automate various operations in Simplicate like making exports, adding data and various reports.
+        
+        It is, however, far from complete. Many calls in the Simplicate api are still missing. So feel free to contribute...
+        
+        Hans-Peter
+        
+Platform: UNKNOWN
 Classifier: Programming Language :: Python :: 3
 Classifier: Programming Language :: Python :: 3.6
 Classifier: Programming Language :: Python :: 3.7
@@ -13,13 +24,3 @@ Classifier: Programming Language :: Python :: 3.9
 Classifier: Operating System :: OS Independent
 Requires-Python: >=3.6
 Description-Content-Type: text/markdown
-License-File: LICENSE
-
-# PySimplicate
-Simplicate api library for Python
-
-I wrote this package to automate various operations in Simplicate like making exports, adding data and various reports.
-
-It is, however, far from complete. Many calls in the Simplicate api are still missing. So feel free to contribute...
-
-Hans-Peter

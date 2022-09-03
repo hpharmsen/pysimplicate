@@ -19,7 +19,7 @@ def project(self, filter={}):
             elif field == 'active' and value:
                 url = self.add_url_param(url, 'project_status.id', self.projectstatus_dict()['tab_pactive'])
             else:
-                url = self.add_url_param( url, field, value)
+                url = self.add_url_param(url, field, value)
     result = self.call(url)
     return result
 
