@@ -66,7 +66,10 @@ class Simplicate:
                 response.raise_for_status()
                 # Code here will only run if the request is successful
                 json = response.json()
-                result += [json['data']]
+                if type(json['data'] == list):
+                    result += json['data']
+                else:
+                    result += [json['data']]
                 offset += 100
                 if offset < json['metadata']['count']:
                     continue
