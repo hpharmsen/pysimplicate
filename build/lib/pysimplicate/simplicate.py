@@ -68,11 +68,11 @@ class Simplicate:
                 json = response.json()
                 if type(json['data']) == list:
                     result += json['data']
+                    offset += 100
+                    if offset < json['metadata']['count']:
+                        continue
                 else:
-                    result += [json['data']]
-                offset += 100
-                if offset < json['metadata']['count']:
-                    continue
+                    result = json['data']
                 self.error = ''
                 return result
             except requests.exceptions.HTTPError as errh:
