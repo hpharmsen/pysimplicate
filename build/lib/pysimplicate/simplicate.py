@@ -108,6 +108,8 @@ class Simplicate:
             'Accept': 'text/plain',
         }
         url = f'https://{ self.subdomain}.simplicate.nl/api/v2{url_path}'
+        if not post_fields.get('update_at'):
+            post_fields['update_at'] = datetime.datetime.now().strftime(DATE_FORMAT)
         response = requests.post(url, json=post_fields, headers=headers)
         return response
 
