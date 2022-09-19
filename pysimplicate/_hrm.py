@@ -1,7 +1,5 @@
 import datetime
 
-from beautiful_date import *
-
 # Fetches all contracts
 def contract(self, filter={}):
     url = '/hrm/contract'
