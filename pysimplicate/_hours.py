@@ -26,6 +26,11 @@ def hours(self, filter={}):
     return self.composed_call(url, fields, filter)
 
 
+def hours_since(self, since, filter={}):
+    filter['updated_at'] = since
+    return hours(self, filter)
+
+
 def hours_simple(self, filter={}):
     data = self.hours(filter)
     result = [
