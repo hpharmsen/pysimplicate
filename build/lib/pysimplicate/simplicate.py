@@ -21,6 +21,7 @@ class Simplicate:
         hourstype,
         hourstype_simple,
         hours,
+        hours_since,
         hours_simple,
         hours_count,
         turnover,
@@ -138,6 +139,7 @@ class Simplicate:
     def composed_call(self, url, fields, filter):
         if type(fields) == tuple:
             fields = {field: field for field in fields}
+        fields['updated_at'] = 'updated_at'  # Default field
 
         if 'day' in filter.keys():
             day = filter['day']
@@ -155,7 +157,7 @@ class Simplicate:
             if field in filter.keys():
                 value = filter[field]
                 operator = ''
-                if field in ('start_date', 'from_date'):
+                if field in ('start_date', 'from_date', 'updated_at'):
                     operator = 'ge'
                 elif field in ('end_date', 'until_date'):
                     operator = 'lt'
