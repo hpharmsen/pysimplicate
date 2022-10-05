@@ -11,7 +11,6 @@ def hourstype_simple(self):
 
 def hours(self, filter={}):
     url = '/hours/hours?sort=start_date'
-
     fields = {
         'employee_id': 'employee.id',
         'employee_name': 'employee.name',
@@ -22,13 +21,14 @@ def hours(self, filter={}):
         'end_date': 'start_date',
         'revenuegroup_id': 'projectservice.revenue_group_id',
     }
-
     return self.composed_call(url, fields, filter)
 
 
-def hours_since(self, since, filter={}):
+def hours_updated_since(self, since, filter={}):
     filter['updated_at'] = since
-    return hours(self, filter)
+    filter['end_date'] = since
+    updated = hours(self, filter)
+    return updated
 
 
 def hours_simple(self, filter={}):

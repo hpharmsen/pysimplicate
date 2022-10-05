@@ -21,7 +21,7 @@ class Simplicate:
         hourstype,
         hourstype_simple,
         hours,
-        hours_since,
+        hours_updated_since,
         hours_simple,
         hours_count,
         turnover,
